@@ -49,6 +49,31 @@
 - 自动暂停等阈值集中在 `src/ride/tracker.ts` 顶部的 `TUNE`，需要真机路测调整。
 - 原生层只负责采集和缓冲，JS 每秒 `drain` 一次；锁屏期间 WebView 可能挂起，回到前台时一次性补算。
 
+## 原生版（`native/`，SwiftUI）— 当前主线
+
+**设计以 `docs/DESIGN.md` 为准：先改文档，再改代码。**
+
+与网页版并存的原生重写，包名 `com.wangzhixuan.pedalfun`（网页壳是 `…pwgbase.hapticstest`，两者可同时安装，数据不互通）。
+
+| 职责 | 位置 |
+|------|------|
+| 工程定义 | `native/project.yml` → `cd native && xcodegen` 生成 `Pedalfun.xcodeproj`（新增文件后要重新生成） |
+| 入口 / 路由与开始过渡 / 根视图 | `native/Pedalfun/App/{PedalfunApp,AppModel,RootView}.swift` |
+| 骑行计算（纯逻辑，阈值在 `Tune`） | `native/Pedalfun/Core/RideTracker.swift` |
+| 骑行页显示规则（纯逻辑） | `native/Pedalfun/Core/RidePresentation.swift` |
+| 定位 / 气压计 / 加速度计 | `native/Pedalfun/Core/LocationRecorder.swift` |
+| 一次骑行的会话 | `native/Pedalfun/Core/RideSession.swift` |
+| 存储、设置、导出、格式化、周统计 | `native/Pedalfun/Core/{RideStore,Settings,GPX,Format,WeekStats}.swift` |
+| 配色、尺寸、字号、动效常量 | `native/Pedalfun/UI/Design.swift` |
+| 共用组件 | `native/Pedalfun/UI/Components/{Buttons,Readouts,Chrome,ElevationProfile}.swift` |
+| 页面 | `native/Pedalfun/UI/Screens/*View.swift` |
+| 单元测试 / 界面测试 | `native/PedalfunTests/` · `native/PedalfunUITests/` |
+
+- 每个页面建在 `ScreenScaffold` 里；主按钮高度由 `Metrics.actionBar` 统一。
+- 跑测试：`cd native && xcodebuild -project Pedalfun.xcodeproj -scheme Pedalfun -destination 'platform=iOS Simulator,name=iPhone 17 Pro' test`
+- 启动参数（看界面用）：`-mock 1` · `-demo cruise|climb|descent|autopause|paused|gpsweak|summary|detail|history|settings` · `-theme light|dark` · `-autostart 1`。
+- 改骑行阈值要同时改 `src/ride/tracker.ts` 和 `RideTracker.swift`。
+
 ## 硬性约定
 
 1. **`vite` `base: './'`** — Capacitor 禁止绝对 `/assets/`  

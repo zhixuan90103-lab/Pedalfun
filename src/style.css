@@ -354,7 +354,7 @@ body.native-app #shell {
 
 .rbtn-hold.holding .rbtn-ring circle {
   stroke-dashoffset: 0;
-  transition: stroke-dashoffset var(--hold-ms, 700ms) linear;
+  transition: stroke-dashoffset var(--hold-ms, 600ms) linear;
 }
 
 @keyframes pop-in {

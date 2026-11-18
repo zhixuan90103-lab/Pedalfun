@@ -132,7 +132,7 @@ export function buzz(kind: 'light' | 'medium' | 'heavy' = 'medium'): void {
  * cancels on early release (`onShort`, e.g. to hint that it needs a hold).
  * Enter / Space fire immediately for keyboard users.
  */
-export function holdButton(btn: HTMLElement, onDone: () => void, onShort?: () => void, ms = 700): void {
+export function holdButton(btn: HTMLElement, onDone: () => void, onShort?: () => void, ms = 600): void {
   let timer: number | null = null;
   btn.style.setProperty('--hold-ms', `${ms}ms`);
 

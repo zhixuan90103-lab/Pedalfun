@@ -1,0 +1,674 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04DAADCA9774405F26C04B57 /* Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2C1F493B4D6E153CC69D80 /* Demo.swift */; };
+		16826C39EF45087301D24176 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDDE18B234961C626CA6793 /* HomeView.swift */; };
+		1839DD5A719E2FA968D202A3 /* GPX.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2912651D3AEFCBD65803B9 /* GPX.swift */; };
+		1B9FE4AAABBD8C4DF2C17E45 /* RideTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AC5B6DD32680F292410021 /* RideTracker.swift */; };
+		2809CFFDDCB7E7355A486B6F /* LocationRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0A1A90C2703F7CA7344926 /* LocationRecorder.swift */; };
+		2B7DFEFC6ADDAB6CD0D36FF6 /* PresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9601A86504A69EAF5DC149D4 /* PresentationTests.swift */; };
+		363771400910344077A6BE27 /* PedalfunUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCDA6624AD028C8F95E0D27 /* PedalfunUITests.swift */; };
+		36384371A8865ABFE95A734F /* Readouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B72699C9250A29FFBDE4394 /* Readouts.swift */; };
+		3921A7FA0B3ED0064D0BC9B6 /* ElevationProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EB8F9695148957D3CE78F4 /* ElevationProfile.swift */; };
+		42941EE49F8BE86CB2B2045B /* RideStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1268C657E0F341B69CCDD2FC /* RideStore.swift */; };
+		42FCF53DBD7890B0F36F09D1 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B874CD6CA33ADA90FD6A10A4 /* Buttons.swift */; };
+		50591721AF06D8CDBA31AF3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 458D5E9ED817DDD73B7AA3CF /* Assets.xcassets */; };
+		5749FCAE228BEFC5D1FADC62 /* RideSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B4A6C8B4CAC4D178BF3523 /* RideSession.swift */; };
+		575E599A7D59171BB6301FB8 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07233CBFAF6DB36FAA01275 /* Haptics.swift */; };
+		58FE57E8592BDF0C9E1C8978 /* PedalfunApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B795FE00C26E3A934D6F21 /* PedalfunApp.swift */; };
+		5F64E1E1A03D9B4CEDB06639 /* RideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7961CA96D68593E31AECA72A /* RideView.swift */; };
+		75F2FC7F0CC27F2F4A1DDDEC /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9F40FA6A4468DE64B222F /* HistoryView.swift */; };
+		7EA3B0B8C3D2E3B25E76CEA0 /* RidePresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD1AD5038B084FBE87A1AB0 /* RidePresentation.swift */; };
+		97987742C13715F31F103A07 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497385A9791680B0BB93D0C4 /* AppModel.swift */; };
+		9AED9D8FE84A8ABFE5ADDE57 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB029C7E2B7E47022DFED4AC /* Settings.swift */; };
+		A74554273AB988F7F64B850D /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67321D88A420D7370784A5E6 /* RootView.swift */; };
+		AA488CC392C1FFE0C3F1B80B /* WeekStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036C0EC628CB25F04AE638 /* WeekStats.swift */; };
+		B771223DBAA11D470EE5E6CB /* Chrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0942D9D2B769F7A468CBECA8 /* Chrome.swift */; };
+		C696713A0F8E84087A9FD467 /* Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3045FD8406BFA01300922E5 /* Format.swift */; };
+		CBD63DD8FBC0443ABD27B742 /* BarlowCondensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E513D83C84A47551B5CD315 /* BarlowCondensed-SemiBold.ttf */; };
+		D3599D7559867640033A5D33 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B26A2032B451DB68B51DA6 /* Design.swift */; };
+		ED4F3ACDDE31BF8D13087D7A /* RideTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB219CF4FFB4EEFC2D0830A /* RideTrackerTests.swift */; };
+		EF3E3B8E33D40C4FB3256983 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA132D98607E629E78464CC5 /* SettingsView.swift */; };
+		F2F34577EC414AA71D6ADD10 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088F0F9A86B5A75A5BDC9640 /* SummaryView.swift */; };
+		FF2E7100D9F55D1A7832468E /* BarlowCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35FCDA4AEA264DC2787597A6 /* BarlowCondensed-Bold.ttf */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7A2D3DCDD0215AA3FA12188B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B0328E1855AFF87038D577C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B960D208468FC1420FFD7B86;
+			remoteInfo = Pedalfun;
+		};
+		7E1B2001A9FE91020D04F631 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B0328E1855AFF87038D577C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B960D208468FC1420FFD7B86;
+			remoteInfo = Pedalfun;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02AC5B6DD32680F292410021 /* RideTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideTracker.swift; sourceTree = "<group>"; };
+		03B4A6C8B4CAC4D178BF3523 /* RideSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideSession.swift; sourceTree = "<group>"; };
+		088F0F9A86B5A75A5BDC9640 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		0942D9D2B769F7A468CBECA8 /* Chrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chrome.swift; sourceTree = "<group>"; };
+		09BC95FFE8E8A16F4FA5F08C /* PedalfunUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PedalfunUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1268C657E0F341B69CCDD2FC /* RideStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideStore.swift; sourceTree = "<group>"; };
+		14B12423A9B181B2ED8CADAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1B72699C9250A29FFBDE4394 /* Readouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Readouts.swift; sourceTree = "<group>"; };
+		1E2C1F493B4D6E153CC69D80 /* Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Demo.swift; sourceTree = "<group>"; };
+		1FB219CF4FFB4EEFC2D0830A /* RideTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideTrackerTests.swift; sourceTree = "<group>"; };
+		27951CCD7F49C0A946955361 /* Pedalfun.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Pedalfun.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		28B26A2032B451DB68B51DA6 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
+		2BCDA6624AD028C8F95E0D27 /* PedalfunUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalfunUITests.swift; sourceTree = "<group>"; };
+		35FCDA4AEA264DC2787597A6 /* BarlowCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BarlowCondensed-Bold.ttf"; sourceTree = "<group>"; };
+		42EB8F9695148957D3CE78F4 /* ElevationProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevationProfile.swift; sourceTree = "<group>"; };
+		458D5E9ED817DDD73B7AA3CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		497385A9791680B0BB93D0C4 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		4BDDE18B234961C626CA6793 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		4EC9F40FA6A4468DE64B222F /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		67321D88A420D7370784A5E6 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		6E513D83C84A47551B5CD315 /* BarlowCondensed-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BarlowCondensed-SemiBold.ttf"; sourceTree = "<group>"; };
+		73B795FE00C26E3A934D6F21 /* PedalfunApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalfunApp.swift; sourceTree = "<group>"; };
+		7961CA96D68593E31AECA72A /* RideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideView.swift; sourceTree = "<group>"; };
+		7AD1AD5038B084FBE87A1AB0 /* RidePresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RidePresentation.swift; sourceTree = "<group>"; };
+		9601A86504A69EAF5DC149D4 /* PresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationTests.swift; sourceTree = "<group>"; };
+		B874CD6CA33ADA90FD6A10A4 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		CD2912651D3AEFCBD65803B9 /* GPX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPX.swift; sourceTree = "<group>"; };
+		D07233CBFAF6DB36FAA01275 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		D3045FD8406BFA01300922E5 /* Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Format.swift; sourceTree = "<group>"; };
+		DE0A1A90C2703F7CA7344926 /* LocationRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRecorder.swift; sourceTree = "<group>"; };
+		E9036C0EC628CB25F04AE638 /* WeekStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekStats.swift; sourceTree = "<group>"; };
+		EA132D98607E629E78464CC5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FA20C1F8D4A5E1AD4717A1C4 /* PedalfunTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PedalfunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB029C7E2B7E47022DFED4AC /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0C26EC9B76CEE412EB1D4F6C /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				4EC9F40FA6A4468DE64B222F /* HistoryView.swift */,
+				4BDDE18B234961C626CA6793 /* HomeView.swift */,
+				7961CA96D68593E31AECA72A /* RideView.swift */,
+				EA132D98607E629E78464CC5 /* SettingsView.swift */,
+				088F0F9A86B5A75A5BDC9640 /* SummaryView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		60986A8FB595ACAB2E0D073A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				497385A9791680B0BB93D0C4 /* AppModel.swift */,
+				73B795FE00C26E3A934D6F21 /* PedalfunApp.swift */,
+				67321D88A420D7370784A5E6 /* RootView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		6A8570BEB1B02EA0E18C8487 = {
+			isa = PBXGroup;
+			children = (
+				9E17668F9CDD7A373FD3AF39 /* Pedalfun */,
+				931AD321182BAC1D46931C99 /* PedalfunTests */,
+				AB69C6959540B583FF60733A /* PedalfunUITests */,
+				D3AE342B29F2231857A5EA1F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		931AD321182BAC1D46931C99 /* PedalfunTests */ = {
+			isa = PBXGroup;
+			children = (
+				9601A86504A69EAF5DC149D4 /* PresentationTests.swift */,
+				1FB219CF4FFB4EEFC2D0830A /* RideTrackerTests.swift */,
+			);
+			path = PedalfunTests;
+			sourceTree = "<group>";
+		};
+		9DABD059E20AA716C124AD84 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				28B26A2032B451DB68B51DA6 /* Design.swift */,
+				F3DA786CF6FA2F3496AD3DF5 /* Components */,
+				0C26EC9B76CEE412EB1D4F6C /* Screens */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		9E17668F9CDD7A373FD3AF39 /* Pedalfun */ = {
+			isa = PBXGroup;
+			children = (
+				14B12423A9B181B2ED8CADAB /* Info.plist */,
+				60986A8FB595ACAB2E0D073A /* App */,
+				F34E8F52F8F6C8658F016F23 /* Core */,
+				9F9284A36EE42BD1215AF6AE /* Resources */,
+				9DABD059E20AA716C124AD84 /* UI */,
+			);
+			path = Pedalfun;
+			sourceTree = "<group>";
+		};
+		9F9284A36EE42BD1215AF6AE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				458D5E9ED817DDD73B7AA3CF /* Assets.xcassets */,
+				35FCDA4AEA264DC2787597A6 /* BarlowCondensed-Bold.ttf */,
+				6E513D83C84A47551B5CD315 /* BarlowCondensed-SemiBold.ttf */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AB69C6959540B583FF60733A /* PedalfunUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2BCDA6624AD028C8F95E0D27 /* PedalfunUITests.swift */,
+			);
+			path = PedalfunUITests;
+			sourceTree = "<group>";
+		};
+		D3AE342B29F2231857A5EA1F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				27951CCD7F49C0A946955361 /* Pedalfun.app */,
+				FA20C1F8D4A5E1AD4717A1C4 /* PedalfunTests.xctest */,
+				09BC95FFE8E8A16F4FA5F08C /* PedalfunUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F34E8F52F8F6C8658F016F23 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				1E2C1F493B4D6E153CC69D80 /* Demo.swift */,
+				D3045FD8406BFA01300922E5 /* Format.swift */,
+				CD2912651D3AEFCBD65803B9 /* GPX.swift */,
+				D07233CBFAF6DB36FAA01275 /* Haptics.swift */,
+				DE0A1A90C2703F7CA7344926 /* LocationRecorder.swift */,
+				7AD1AD5038B084FBE87A1AB0 /* RidePresentation.swift */,
+				03B4A6C8B4CAC4D178BF3523 /* RideSession.swift */,
+				1268C657E0F341B69CCDD2FC /* RideStore.swift */,
+				02AC5B6DD32680F292410021 /* RideTracker.swift */,
+				FB029C7E2B7E47022DFED4AC /* Settings.swift */,
+				E9036C0EC628CB25F04AE638 /* WeekStats.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		F3DA786CF6FA2F3496AD3DF5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B874CD6CA33ADA90FD6A10A4 /* Buttons.swift */,
+				0942D9D2B769F7A468CBECA8 /* Chrome.swift */,
+				42EB8F9695148957D3CE78F4 /* ElevationProfile.swift */,
+				1B72699C9250A29FFBDE4394 /* Readouts.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		51E48DEFBA8FF622E113DEB8 /* PedalfunTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8312B2CB757A79F3A8B3E6F4 /* Build configuration list for PBXNativeTarget "PedalfunTests" */;
+			buildPhases = (
+				505B219DC25F1235C087140F /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				41E46A7C5C5EF616AB97B335 /* PBXTargetDependency */,
+			);
+			name = PedalfunTests;
+			packageProductDependencies = (
+			);
+			productName = PedalfunTests;
+			productReference = FA20C1F8D4A5E1AD4717A1C4 /* PedalfunTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B960D208468FC1420FFD7B86 /* Pedalfun */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4D689F080019652374C1E83 /* Build configuration list for PBXNativeTarget "Pedalfun" */;
+			buildPhases = (
+				AF08237355A2362DF752C8DE /* Sources */,
+				9B8A107CF69E0E20C7DE80EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Pedalfun;
+			packageProductDependencies = (
+			);
+			productName = Pedalfun;
+			productReference = 27951CCD7F49C0A946955361 /* Pedalfun.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ECF32F7F5018B71CC8B4D7DD /* PedalfunUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C90D975C970DB7F630FC761C /* Build configuration list for PBXNativeTarget "PedalfunUITests" */;
+			buildPhases = (
+				A979D39054C3861011299DCE /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				77344DF4A893B047E0146FF9 /* PBXTargetDependency */,
+			);
+			name = PedalfunUITests;
+			packageProductDependencies = (
+			);
+			productName = PedalfunUITests;
+			productReference = 09BC95FFE8E8A16F4FA5F08C /* PedalfunUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B0328E1855AFF87038D577C8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					51E48DEFBA8FF622E113DEB8 = {
+						DevelopmentTeam = 2F4FJS7J37;
+					};
+					B960D208468FC1420FFD7B86 = {
+						DevelopmentTeam = 2F4FJS7J37;
+						ProvisioningStyle = Automatic;
+					};
+					ECF32F7F5018B71CC8B4D7DD = {
+						DevelopmentTeam = 2F4FJS7J37;
+						TestTargetID = B960D208468FC1420FFD7B86;
+					};
+				};
+			};
+			buildConfigurationList = 090DA5B37C5B6B28B63E41E8 /* Build configuration list for PBXProject "Pedalfun" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 6A8570BEB1B02EA0E18C8487;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B960D208468FC1420FFD7B86 /* Pedalfun */,
+				51E48DEFBA8FF622E113DEB8 /* PedalfunTests */,
+				ECF32F7F5018B71CC8B4D7DD /* PedalfunUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9B8A107CF69E0E20C7DE80EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50591721AF06D8CDBA31AF3F /* Assets.xcassets in Resources */,
+				FF2E7100D9F55D1A7832468E /* BarlowCondensed-Bold.ttf in Resources */,
+				CBD63DD8FBC0443ABD27B742 /* BarlowCondensed-SemiBold.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		505B219DC25F1235C087140F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B7DFEFC6ADDAB6CD0D36FF6 /* PresentationTests.swift in Sources */,
+				ED4F3ACDDE31BF8D13087D7A /* RideTrackerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A979D39054C3861011299DCE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				363771400910344077A6BE27 /* PedalfunUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF08237355A2362DF752C8DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97987742C13715F31F103A07 /* AppModel.swift in Sources */,
+				42FCF53DBD7890B0F36F09D1 /* Buttons.swift in Sources */,
+				B771223DBAA11D470EE5E6CB /* Chrome.swift in Sources */,
+				04DAADCA9774405F26C04B57 /* Demo.swift in Sources */,
+				D3599D7559867640033A5D33 /* Design.swift in Sources */,
+				3921A7FA0B3ED0064D0BC9B6 /* ElevationProfile.swift in Sources */,
+				C696713A0F8E84087A9FD467 /* Format.swift in Sources */,
+				1839DD5A719E2FA968D202A3 /* GPX.swift in Sources */,
+				575E599A7D59171BB6301FB8 /* Haptics.swift in Sources */,
+				75F2FC7F0CC27F2F4A1DDDEC /* HistoryView.swift in Sources */,
+				16826C39EF45087301D24176 /* HomeView.swift in Sources */,
+				2809CFFDDCB7E7355A486B6F /* LocationRecorder.swift in Sources */,
+				58FE57E8592BDF0C9E1C8978 /* PedalfunApp.swift in Sources */,
+				36384371A8865ABFE95A734F /* Readouts.swift in Sources */,
+				7EA3B0B8C3D2E3B25E76CEA0 /* RidePresentation.swift in Sources */,
+				5749FCAE228BEFC5D1FADC62 /* RideSession.swift in Sources */,
+				42941EE49F8BE86CB2B2045B /* RideStore.swift in Sources */,
+				1B9FE4AAABBD8C4DF2C17E45 /* RideTracker.swift in Sources */,
+				5F64E1E1A03D9B4CEDB06639 /* RideView.swift in Sources */,
+				A74554273AB988F7F64B850D /* RootView.swift in Sources */,
+				9AED9D8FE84A8ABFE5ADDE57 /* Settings.swift in Sources */,
+				EF3E3B8E33D40C4FB3256983 /* SettingsView.swift in Sources */,
+				F2F34577EC414AA71D6ADD10 /* SummaryView.swift in Sources */,
+				AA488CC392C1FFE0C3F1B80B /* WeekStats.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		41E46A7C5C5EF616AB97B335 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B960D208468FC1420FFD7B86 /* Pedalfun */;
+			targetProxy = 7A2D3DCDD0215AA3FA12188B /* PBXContainerItemProxy */;
+		};
+		77344DF4A893B047E0146FF9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B960D208468FC1420FFD7B86 /* Pedalfun */;
+			targetProxy = 7E1B2001A9FE91020D04F631 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		412260E22369ABE3069139FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		70ACB7510224A142D990E802 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2F4FJS7J37;
+				INFOPLIST_FILE = Pedalfun/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wangzhixuan.pedalfun;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		7B18DE39F270C029D03AE7B8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		BA4688361BFE774D87F5BB94 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2F4FJS7J37;
+				INFOPLIST_FILE = Pedalfun/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wangzhixuan.pedalfun;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		C0C53CE09F817E1DB185C65C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 2F4FJS7J37;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wangzhixuan.pedalfun.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pedalfun.app/Pedalfun";
+			};
+			name = Debug;
+		};
+		C26CEAD2679CE0C5416DA121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 2F4FJS7J37;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wangzhixuan.pedalfun.uitests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Pedalfun;
+			};
+			name = Debug;
+		};
+		E88508EF406FAF57DA86838B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 2F4FJS7J37;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wangzhixuan.pedalfun.uitests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Pedalfun;
+			};
+			name = Release;
+		};
+		EBCF4FD7A8380A1D44402EF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 2F4FJS7J37;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wangzhixuan.pedalfun.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pedalfun.app/Pedalfun";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		090DA5B37C5B6B28B63E41E8 /* Build configuration list for PBXProject "Pedalfun" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				412260E22369ABE3069139FF /* Debug */,
+				7B18DE39F270C029D03AE7B8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8312B2CB757A79F3A8B3E6F4 /* Build configuration list for PBXNativeTarget "PedalfunTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C0C53CE09F817E1DB185C65C /* Debug */,
+				EBCF4FD7A8380A1D44402EF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C4D689F080019652374C1E83 /* Build configuration list for PBXNativeTarget "Pedalfun" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70ACB7510224A142D990E802 /* Debug */,
+				BA4688361BFE774D87F5BB94 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C90D975C970DB7F630FC761C /* Build configuration list for PBXNativeTarget "PedalfunUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C26CEAD2679CE0C5416DA121 /* Debug */,
+				E88508EF406FAF57DA86838B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B0328E1855AFF87038D577C8 /* Project object */;
+}
