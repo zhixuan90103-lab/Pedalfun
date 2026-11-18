@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+  Pedalfun entry.
+  DOM: #shell > #viewport > #app > #stage > #ui-root
+  See AGENTS.md · docs/ENGINEERING.md
+-->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Pedalfun</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="shell">
+      <div id="viewport">
+        <div id="app">
+          <div id="stage" aria-label="app-stage" data-theme="dark">
+            <div id="ui-root">
+              <div id="toast" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop preview only (outside the design stage, like #device-switcher) -->
+    <div id="device-switcher" aria-label="device-viewport-switcher">
+      <button type="button" data-device="phone">手机竖屏</button>
+      <button type="button" data-device="pad">Pad 竖屏</button>
+    </div>
+    <div id="device-label"></div>
+    <div id="demo-panel" aria-label="预览控制">
+      <span>模拟状态</span>
+      <button type="button" data-demo="auto" class="active">自动循环</button>
+      <button type="button" data-demo="cruise">巡航</button>
+      <button type="button" data-demo="climb">爬坡</button>
+      <button type="button" data-demo="descent">下坡</button>
+      <button type="button" data-demo="stop">停车</button>
+      <button type="button" data-demo="gpsWeak">GPS 弱</button>
+      <button type="button" data-demo="ff">快进 30 分钟</button>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
