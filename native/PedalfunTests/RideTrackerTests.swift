@@ -73,6 +73,73 @@ final class RideTrackerTests: XCTestCase {
         XCTAssertEqual(tracker.state.moving, 20, accuracy: 1)
     }
 
+    /// Rides at `v` m/s for `seconds`, then calls `after` with a function that
+    /// pushes one more fix: (true speed, reported speed, reported speed error, vibration).
+    private func cruise(_ v: Double = 6, seconds: Int = 20,
+                        after: (RideTracker, (Double, Double?, Double?, Double) -> Void) -> Void) {
+        let tracker = RideTracker(autoPause: { true }, startedAt: Date(timeIntervalSince1970: 0))
+        var t = 0.0, lat = 31.2
+        func emit(_ real: Double, _ reported: Double?, _ acc: Double?, _ vibration: Double) {
+            t += 1
+            lat += real / metresPerDegree
+            tracker.push(Fix(t: t, lat: lat, lon: 121.4, speed: reported, speedAcc: acc, hAcc: 5,
+                             alt: 50, baro: 0, motion: vibration))
+        }
+        emit(0, 0, 0.3, 0.002)
+        for _ in 0..<seconds { emit(v, v, 0.3, 0.08) }
+        XCTAssertEqual(tracker.state.speed, v * 3.6, accuracy: 0.5)
+        after(tracker, emit)
+    }
+
+    /// Walking the bike while the receiver still reports riding speed.
+    func testLaggingReceiverSpeedIsPulledDownToDisplacement() {
+        cruise { tracker, emit in
+            for _ in 0..<4 { emit(1.3, 6, 0.3, 0.08) }
+            XCTAssertEqual(tracker.state.speed, 1.3 * 3.6, accuracy: 1)
+            XCTAssertEqual(tracker.state.status, .moving)
+        }
+    }
+
+    func testReceiverSpeedWithLargeErrorIsNotUsed() {
+        cruise { tracker, emit in
+            for _ in 0..<4 { emit(1.3, 7, 6, 0.08) }
+            XCTAssertEqual(tracker.state.speed, 1.3 * 3.6, accuracy: 1)
+            for _ in 0..<4 { emit(1.3, -1, -1, 0.08) }
+            XCTAssertEqual(tracker.state.speed, 1.3 * 3.6, accuracy: 1)
+        }
+    }
+
+    /// One wild reading while walking must not show, nor count as the top speed.
+    func testSpeedSpikeIsLimited() {
+        cruise(1.3) { tracker, emit in
+            emit(1.3, 12, 0.3, 0.08)
+            XCTAssertLessThan(tracker.state.speed, 20)
+            XCTAssertLessThan(tracker.state.max, 20)
+        }
+    }
+
+    /// Bike parked: the phone goes still while the receiver's speed is still decaying.
+    func testStopShowsWithinTwoSeconds() {
+        cruise { tracker, emit in
+            emit(0, 4, 0.3, 0.004)
+            emit(0, 3, 0.3, 0.003)
+            XCTAssertEqual(tracker.state.speed, 0)
+            XCTAssertEqual(tracker.state.status, .autoPaused)
+            XCTAssertEqual(tracker.state.moving, 20, accuracy: 1.5)
+        }
+    }
+
+    func testRestartShowsWithinTwoSeconds() {
+        cruise { tracker, emit in
+            for _ in 0..<10 { emit(0, 0.2, 0.3, 0.003) }
+            XCTAssertEqual(tracker.state.status, .autoPaused)
+            emit(1.5, 1.5, 0.3, 0.08)
+            emit(3, 3, 0.3, 0.08)
+            XCTAssertEqual(tracker.state.status, .moving)
+            XCTAssertEqual(tracker.state.speed, 3 * 3.6, accuracy: 0.5)
+        }
+    }
+
     func testGlitchesAndWeakFixesAddNoDistance() {
         let tracker = RideTracker(autoPause: { false }, startedAt: Date(timeIntervalSince1970: 0))
         func push(_ t: Double, _ metres: Double, acc: Double) {

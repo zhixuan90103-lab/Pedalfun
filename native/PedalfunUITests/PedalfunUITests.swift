@@ -45,6 +45,18 @@ final class PedalfunUITests: XCTestCase {
         XCTAssertTrue(app.buttons["开始骑行"].waitForExistence(timeout: 3))
     }
 
+    /// Tapping a day bar shows that day under the bars.
+    func testPickingADayShowsItsNumbers() {
+        let app = launch(["-mock", "1", "-weight", "70"])
+        let monday = app.buttons["day-0"]
+        XCTAssertTrue(monday.waitForExistence(timeout: 5))
+        monday.tap()
+        let title = NSPredicate(format: "label BEGINSWITH '周一，' OR label BEGINSWITH '今天，'")
+        XCTAssertTrue(app.staticTexts.matching(title).firstMatch.waitForExistence(timeout: 2))
+        XCTAssertTrue(monday.isSelected)
+        XCTAssertFalse(app.buttons["填写体重以显示消耗"].exists)
+    }
+
     func testPauseAndResume() {
         let app = launch(["-mock", "1", "-demo", "cruise"])
         XCTAssertTrue(app.buttons["暂停"].waitForExistence(timeout: 5))

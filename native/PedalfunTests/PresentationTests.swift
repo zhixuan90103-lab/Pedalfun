@@ -92,5 +92,35 @@ final class PresentationTests: XCTestCase {
         XCTAssertEqual(w.dist, 25_000)
         XCTAssertEqual(w.perDay[0], 20_000)
         XCTAssertEqual(w.perDay[2], 5_000)
+        XCTAssertEqual(w.days[2].avg, 30, accuracy: 0.01) // 5 km in 10 min
+        XCTAssertEqual(w.days[1], WeekStats.Day())
+        XCTAssertNil(w.days[2].kcal, "no weight, no estimate")
+
+        let both = WeekStats(rides: [ride(18, 5), ride(18, 3)], profile: Profile(weight: 70), now: wed)
+        XCTAssertEqual(both.days[2].count, 2)
+        XCTAssertEqual(both.days[2].moving, 1200)
+        XCTAssertEqual(both.days[2].kcal ?? 0,
+                       Calories.kcal(dist: 5000, moving: 600, profile: Profile(weight: 70))!
+                           + Calories.kcal(dist: 3000, moving: 600, profile: Profile(weight: 70))!,
+                       accuracy: 0.01)
+    }
+
+    func testCalories() {
+        XCTAssertEqual(Calories.met(kmh: 3), 3.5)
+        XCTAssertEqual(Calories.met(kmh: 20.8), 8.0, accuracy: 0.001)
+        XCTAssertEqual(Calories.met(kmh: 22.45), 9.0, accuracy: 0.001) // halfway between two entries
+        XCTAssertEqual(Calories.met(kmh: 50), 15.8)
+
+        // One hour at 20.8 km/h: 8 MET × 70 kg.
+        XCTAssertNil(Calories.kcal(dist: 20_800, moving: 3600, profile: Profile()))
+        XCTAssertEqual(Calories.kcal(dist: 20_800, moving: 3600, profile: Profile(weight: 70))!, 560, accuracy: 0.5)
+        XCTAssertEqual(Calories.kcal(dist: 0, moving: 0, profile: Profile(weight: 70)), 0)
+
+        // With sex and height the resting rate is the rider's own: 1648.75 kcal/day here.
+        let man = Calories.kcal(dist: 20_800, moving: 3600, profile: Profile(sex: .male, height: 175, weight: 70))!
+        XCTAssertEqual(man, 560 * 25.2 * 70 / 1648.75, accuracy: 0.5)
+        let woman = Calories.kcal(dist: 20_800, moving: 3600, profile: Profile(sex: .female, height: 175, weight: 70))!
+        XCTAssertGreaterThan(woman, man)
+        XCTAssertEqual(Fmt.kcal(559.6), "560")
     }
 }

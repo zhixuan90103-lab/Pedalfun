@@ -139,6 +139,8 @@ enum Motion {
     /// selection sliding in a picker or switch
     static let select = Animation.spring(response: 0.3, dampingFraction: 0.7)
     static let toast = Animation.easeOut(duration: 0.18)
+    /// a deleted history row closing up
+    static let rowRemove = Animation.easeOut(duration: 0.25)
     /// one-off reveals: week bars growing, elevation profile wiping in
     static let barGrow = Animation.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.5)
     static let profileWipe = Animation.timingCurve(0.3, 0, 0.2, 1, duration: 0.7).delay(0.12)

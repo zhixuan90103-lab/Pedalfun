@@ -28,6 +28,10 @@ struct Fmt {
         return String(format: "%d:%02d:%02d", s / 3600, s % 3600 / 60, s % 60)
     }
 
+    static func kcal(_ v: Double) -> String {
+        String(Int(v.rounded()))
+    }
+
     static func grade(_ pct: Double) -> String {
         let r = (pct * 10).rounded() / 10
         if r == 0 { return "0.0" }

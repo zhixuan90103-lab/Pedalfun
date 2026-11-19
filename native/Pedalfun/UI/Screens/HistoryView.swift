@@ -54,9 +54,12 @@ struct HistoryView: View {
                                     .listRowSeparator(.hidden)
                                     .listRowBackground(pal.bg)
                                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                        Button(role: .destructive) {
+                                        // No destructive role: with it the system runs its own
+                                        // removal animation, which fights ours and makes the
+                                        // red button jump. The row just closes up instead.
+                                        Button {
                                             Haptics.tap(.medium, settings)
-                                            store.delete(ride.id)
+                                            withAnimation(Motion.rowRemove) { store.delete(ride.id) }
                                             model.showToast("已删除")
                                         } label: {
                                             Image(systemName: "trash")

@@ -8,12 +8,15 @@ struct HomeView: View {
 
     @State private var permission: LocationPermission = .prompt
     @State private var grown = false
+    /// The day whose numbers show under the bars; nil = today.
+    @State private var picked: Int?
     @State private var startFrame: CGRect = .zero
     private static var autoStarted = false
 
     var body: some View {
         let f = settings.fmt
-        let week = WeekStats(rides: store.rides)
+        let week = WeekStats(rides: store.rides, profile: settings.profile)
+        let sel = min(picked ?? week.todayIndex, week.todayIndex)
 
         ScreenScaffold {
             TopBar {
@@ -45,9 +48,11 @@ struct HomeView: View {
                     .foregroundStyle(pal.ink2)
                     .padding(.top, 12)
 
-                bars(week)
+                bars(week, sel, f)
                     .frame(maxHeight: 150)
-                    .padding(.top, 30)
+                    .padding(.top, 22)
+                dayDetail(week, sel, f)
+                    .padding(.top, 18)
                 Spacer(minLength: 0)
             }
             .padding(.horizontal, Metrics.side)
@@ -92,41 +97,112 @@ struct HomeView: View {
         }
     }
 
-    /// Seven day bars with weekday and date; today in green.
-    private func bars(_ week: WeekStats) -> some View {
+    private static let weekdays = ["一", "二", "三", "四", "五", "六", "日"]
+
+    /// Seven day bars, each with its distance and unit in the middle of the
+    /// capsule, and weekday and date below. Tapping one picks that day; the picked bar is green.
+    private func bars(_ week: WeekStats, _ sel: Int, _ f: Fmt) -> some View {
         let peak = max(week.perDay.max() ?? 0, 1)
-        let labels = ["一", "二", "三", "四", "五", "六", "日"]
         return HStack(spacing: 14) {
             ForEach(0..<7, id: \.self) { i in
+                let day = week.days[i]
                 let today = i == week.todayIndex
-                let ratio = week.perDay[i] > 0 ? max(0.06, week.perDay[i] / peak) : 0
+                let on = i == sel
+                let future = i > week.todayIndex
+                let ratio = day.dist > 0 ? max(0.06, day.dist / peak) : 0
                 VStack(spacing: 8) {
                     GeometryReader { geo in
+                        let h = geo.size.height
+                        let fill: CGFloat = ratio > 0 ? max(geo.size.width, h * ratio) : 0
+                        // The label sits mid-capsule when the fill reaches past it,
+                        // otherwise in the empty track above the fill: never across the edge.
+                        let half: CGFloat = 15
+                        let covered = fill >= h / 2 + half
+                        let above: CGFloat = min(max(h / 2, fill + half + 2), h - half - 4)
+                        let centre: CGFloat = covered ? h / 2 : above
                         ZStack(alignment: .bottom) {
                             Capsule().fill(pal.surface)
                             Capsule()
-                                .fill(today ? pal.go : pal.ink2)
-                                .frame(height: max(geo.size.width, geo.size.height * ratio))
+                                .fill(on ? pal.go : pal.ink2)
+                                .frame(height: fill)
                                 .opacity(ratio > 0 ? 1 : 0)
                                 .scaleEffect(y: grown ? 1 : 0, anchor: .bottom)
                                 .animation(
                                     Motion.barGrow.delay(Double(i) * 0.045 + 0.08),
                                     value: grown
                                 )
+                            if day.dist > 0 {
+                                VStack(spacing: 0) {
+                                    Text(f.dist(day.dist, digits: 1)).font(.num(TypeScale.label))
+                                    Text(f.distUnit).font(.system(size: 10, weight: .medium))
+                                }
+                                .foregroundStyle(covered ? (on ? Color.white : pal.bg) : pal.ink)
+                                .lineLimit(1)
+                                .fixedSize()
+                                .position(x: geo.size.width / 2, y: h - centre)
+                                .opacity(grown ? 1 : 0)
+                                .animation(.easeOut(duration: 0.25).delay(Double(i) * 0.045 + 0.35), value: grown)
+                            }
                         }
                     }
-                    .opacity(i > week.todayIndex ? 0.5 : 1)
+                    .opacity(future ? 0.5 : 1)
                     VStack(spacing: 1) {
-                        Text(labels[i])
-                            .font(.system(size: 12, weight: today ? .semibold : .regular))
-                            .foregroundStyle(today ? pal.goText : pal.ink3)
+                        Text(Self.weekdays[i])
+                            .font(.system(size: 12, weight: today || on ? .semibold : .regular))
+                            .foregroundStyle(today ? pal.goText : on ? pal.ink : pal.ink3)
                         Text("\(week.dayNumbers[i])")
                             .font(.num(15, bold: false))
-                            .foregroundStyle(today ? pal.goText : pal.ink2)
+                            .foregroundStyle(today ? pal.goText : on ? pal.ink : pal.ink2)
                     }
                 }
+                .frame(maxWidth: .infinity)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    guard !future, !on else { return }
+                    Haptics.tap(.light, settings)
+                    withAnimation(Motion.stateChange) { picked = i }
+                }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("周\(Self.weekdays[i])，\(f.dist(day.dist, digits: 1)) \(f.distUnit)")
+                .accessibilityIdentifier("day-\(i)")
+                .accessibilityAddTraits(on ? [.isButton, .isSelected] : .isButton)
             }
         }
+    }
+
+    /// The picked day's totals. The four cells never move; a day without a
+    /// ride shows "--".
+    private func dayDetail(_ week: WeekStats, _ sel: Int, _ f: Fmt) -> some View {
+        let day = week.days[sel]
+        let has = day.count > 0
+        let title = sel == week.todayIndex ? "今天" : "周\(Self.weekdays[sel])"
+        return VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                CellLabel(has ? "\(title)，\(day.count) 次骑行" : "\(title)，没有骑行")
+                Spacer()
+                if settings.weight == nil {
+                    Button("填写体重以显示消耗") { model.go(.settings) }
+                        .font(.system(size: 13))
+                        .foregroundStyle(pal.goText)
+                }
+            }
+            HStack(spacing: Metrics.gridGap) {
+                dayCell("里程", f.distUnit, has ? f.dist(day.dist, digits: 1) : "--")
+                dayCell("均速", nil, has ? f.speed(day.avg) : "--")
+                dayCell("时间", nil, has ? Fmt.dur(day.moving) : "--")
+                dayCell("消耗", "kcal", has ? day.kcal.map(Fmt.kcal) ?? "--" : "--")
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("day-detail")
+    }
+
+    private func dayCell(_ label: String, _ unit: String?, _ value: String) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
+            CellLabel(label, unit: unit)
+            Num(value, TypeScale.card)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func lastRide(_ ride: Ride, _ f: Fmt) -> some View {

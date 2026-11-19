@@ -3,6 +3,10 @@
 > **打开本仓库时的第一入口。**  
 > 合并自 **niantu**（适配/TS/预览）+ **three-webgpu-cap-shell**（打包/文档/bootstrap/可验证 demo）。
 
+## 当前状态（2026-11-19）
+
+**网页版（`src/`、`ios/`、`plugins/`）暂停开发，只做原生版（`native/`）。** 网页版代码保留不删，但不再跟进功能和阈值；除非明确要求，不要改动它。
+
 ## 一句话
 
 **TypeScript + Three.js WebGPU + Vite + Capacitor iOS** 竖屏手游稳健底座。  
@@ -63,7 +67,7 @@
 | 骑行页显示规则（纯逻辑） | `native/Pedalfun/Core/RidePresentation.swift` |
 | 定位 / 气压计 / 加速度计 | `native/Pedalfun/Core/LocationRecorder.swift` |
 | 一次骑行的会话 | `native/Pedalfun/Core/RideSession.swift` |
-| 存储、设置、导出、格式化、周统计 | `native/Pedalfun/Core/{RideStore,Settings,GPX,Format,WeekStats}.swift` |
+| 存储、设置、导出、格式化、周统计、消耗估算 | `native/Pedalfun/Core/{RideStore,Settings,GPX,Format,WeekStats,Calories}.swift` |
 | 配色、尺寸、字号、动效常量 | `native/Pedalfun/UI/Design.swift` |
 | 共用组件 | `native/Pedalfun/UI/Components/{Buttons,Readouts,Chrome,ElevationProfile}.swift` |
 | 页面 | `native/Pedalfun/UI/Screens/*View.swift` |
@@ -71,8 +75,8 @@
 
 - 每个页面建在 `ScreenScaffold` 里；主按钮高度由 `Metrics.actionBar` 统一。
 - 跑测试：`cd native && xcodebuild -project Pedalfun.xcodeproj -scheme Pedalfun -destination 'platform=iOS Simulator,name=iPhone 17 Pro' test`
-- 启动参数（看界面用）：`-mock 1` · `-demo cruise|climb|descent|autopause|paused|gpsweak|summary|detail|history|settings` · `-theme light|dark` · `-autostart 1`。
-- 改骑行阈值要同时改 `src/ride/tracker.ts` 和 `RideTracker.swift`。
+- 启动参数（看界面用）：`-mock 1` · `-demo cruise|climb|descent|autopause|paused|gpsweak|summary|detail|history|settings` · `-theme light|dark` · `-autostart 1` · `-weight 70 -height 175 -sex male|female`（个人资料，只对这次启动生效）。
+- 改骑行阈值只改 `RideTracker.swift`。网页版暂停期间 `src/ride/tracker.ts` 不再同步，恢复开发时要先对齐。
 
 ## 硬性约定
 

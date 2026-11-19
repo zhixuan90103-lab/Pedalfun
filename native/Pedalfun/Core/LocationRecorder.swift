@@ -147,6 +147,7 @@ final class LocationRecorder: NSObject, CLLocationManagerDelegate {
                 lat: loc.coordinate.latitude,
                 lon: loc.coordinate.longitude,
                 speed: loc.speed,
+                speedAcc: loc.speedAccuracy,
                 hAcc: loc.horizontalAccuracy,
                 alt: loc.verticalAccuracy >= 0 ? loc.altitude : nil,
                 baro: baro,

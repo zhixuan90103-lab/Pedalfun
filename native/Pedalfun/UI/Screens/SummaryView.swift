@@ -25,64 +25,64 @@ struct SummaryView: View {
                 EmptyView()
             }
         } content: {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(live ? "\(ride.name)，已保存" : ride.name)
-                        .font(.system(size: 15))
-                        .foregroundStyle(pal.ink2)
-                    HStack(alignment: .lastTextBaseline, spacing: 8) {
-                        Num(f.dist(ride.dist), TypeScale.display)
-                        Text(f.distUnit).font(.system(size: 16)).foregroundStyle(pal.ink2)
-                    }
-                    .padding(.top, 8)
-
-                    ElevationProfile(samples: ride.samples, maxSeg: 64)
-                        .frame(height: 104)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        // Wipes in from the left once.
-                        .mask(alignment: .leading) {
-                            GeometryReader { geo in
-                                Rectangle().frame(width: wiped ? geo.size.width : 0)
-                            }
-                        }
-                        .padding(.top, 26)
-                    HStack {
-                        Text("0")
-                        Spacer()
-                        Text("\(f.dist(ride.dist, digits: 1)) \(f.distUnit)")
-                    }
-                    .font(.system(size: 12))
-                    .foregroundStyle(pal.ink3)
-                    .padding(.top, 6)
-
-                    HStack(spacing: 14) {
-                        legend(pal.flat, "平路")
-                        legend(pal.go, "下坡")
-                        legend(pal.stop, "上坡")
-                    }
-                    .padding(.top, 12)
-
-                    Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 20) {
-                        GridRow {
-                            stat("移动时间", Fmt.dur(ride.moving), nil)
-                            stat("总耗时", Fmt.dur(ride.total), nil)
-                        }
-                        GridRow {
-                            stat("均速", f.speed(ride.avg), f.speedUnit)
-                            stat("最高速度", f.speed(ride.max), f.speedUnit)
-                        }
-                        GridRow {
-                            stat("爬升", f.alt(ride.climb), f.altUnit)
-                            stat("最高海拔", f.alt(ride.altMax), f.altUnit)
-                        }
-                    }
-                    .padding(.top, 28)
+            // One screen, no scrolling: the profile flexes, the rows share what is left.
+            VStack(alignment: .leading, spacing: 0) {
+                Text(live ? "\(ride.name)，已保存" : ride.name)
+                    .font(.system(size: 15))
+                    .foregroundStyle(pal.ink2)
+                HStack(alignment: .lastTextBaseline, spacing: 8) {
+                    Num(f.dist(ride.dist), TypeScale.display)
+                    Text(f.distUnit).font(.system(size: 16)).foregroundStyle(pal.ink2)
                 }
-                .padding(.horizontal, Metrics.side)
+                .padding(.top, 8)
+
+                ElevationProfile(samples: ride.samples, maxSeg: 64)
+                    .frame(minHeight: 40, maxHeight: 96)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    // Wipes in from the left once.
+                    .mask(alignment: .leading) {
+                        GeometryReader { geo in
+                            Rectangle().frame(width: wiped ? geo.size.width : 0)
+                        }
+                    }
+                    .padding(.top, 18)
+                HStack(spacing: 12) {
+                    Text("0")
+                    Spacer(minLength: 0)
+                    legend(pal.flat, "平路")
+                    legend(pal.go, "下坡")
+                    legend(pal.stop, "上坡")
+                    Spacer(minLength: 0)
+                    Text("\(f.dist(ride.dist, digits: 1)) \(f.distUnit)")
+                }
+                .font(.system(size: 12))
+                .foregroundStyle(pal.ink3)
                 .padding(.top, 6)
-                .padding(.bottom, 16)
+
+                Spacer(minLength: 10)
+                group("时间") {
+                    stat("移动时间", nil, Fmt.dur(ride.moving))
+                    stat("总耗时", nil, Fmt.dur(ride.total))
+                }
+                rule
+                group("速度") {
+                    stat("均速", f.speedUnit, f.speed(ride.avg))
+                    stat("最高", f.speedUnit, f.speed(ride.max))
+                }
+                rule
+                group("海拔") {
+                    stat("爬升", f.altUnit, f.alt(ride.climb))
+                    stat("最高", f.altUnit, f.alt(ride.altMax))
+                }
+                rule
+                group("消耗") {
+                    stat("估算", "kcal", ride.kcal(settings.profile).map(Fmt.kcal) ?? "--")
+                    Color.clear.frame(maxWidth: .infinity, maxHeight: 1)
+                }
             }
-            .scrollBounceBehavior(.basedOnSize)
+            .padding(.horizontal, Metrics.side)
+            .padding(.top, 6)
+            .padding(.bottom, 4)
         } actions: {
                 if live {
                     // Already saved when the ride ended; this only confirms and returns home.
@@ -108,15 +108,27 @@ struct SummaryView: View {
         }
     }
 
-    private func stat(_ label: String, _ value: String, _ unit: String?) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            CellLabel(label)
-            HStack(alignment: .lastTextBaseline, spacing: 4) {
-                Num(value, TypeScale.stat)
-                if let unit {
-                    Text(unit).font(.system(size: 13)).foregroundStyle(pal.ink3)
-                }
-            }
+    private var rule: some View {
+        Rectangle().fill(pal.surface).frame(height: 1)
+    }
+
+    /// One category: its name in a narrow left column, then its numbers.
+    private func group<Cells: View>(_ title: String, @ViewBuilder cells: () -> Cells) -> some View {
+        HStack(alignment: .center, spacing: Metrics.gridGap) {
+            Text(title)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(pal.ink)
+                .frame(width: 52, alignment: .leading)
+            cells()
+        }
+        .frame(maxHeight: 78)
+        .accessibilityElement(children: .contain)
+    }
+
+    private func stat(_ label: String, _ unit: String?, _ value: String) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
+            CellLabel(label, unit: unit)
+            Num(value, TypeScale.stat)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
