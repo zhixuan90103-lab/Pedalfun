@@ -63,17 +63,19 @@
 |------|------|
 | 工程定义 | `native/project.yml` → `cd native && xcodegen` 生成 `Pedalfun.xcodeproj`（新增文件后要重新生成） |
 | 入口 / 路由与开始过渡 / 根视图 | `native/Pedalfun/App/{PedalfunApp,AppModel,RootView}.swift` |
-| 骑行计算（纯逻辑，阈值在 `Tune`） | `native/Pedalfun/Core/RideTracker.swift` |
-| 骑行页显示规则（纯逻辑） | `native/Pedalfun/Core/RidePresentation.swift` |
+| 骑行计算（纯逻辑，阈值都在 `RideTracker.Tune`） | `native/Pedalfun/Core/{RideTracker,SpeedEstimator}.swift` |
+| 各页显示规则（纯逻辑：显示什么文字、单位、状态） | `native/Pedalfun/Core/{Ride,Home,Summary}Presentation.swift` |
 | 定位 / 气压计 / 加速度计 | `native/Pedalfun/Core/LocationRecorder.swift` |
 | 一次骑行的会话 | `native/Pedalfun/Core/RideSession.swift` |
 | 存储、设置、导出、格式化、周统计、消耗估算 | `native/Pedalfun/Core/{RideStore,Settings,GPX,Format,WeekStats,Calories}.swift` |
-| 配色、尺寸、字号、动效常量 | `native/Pedalfun/UI/Design.swift` |
-| 共用组件 | `native/Pedalfun/UI/Components/{Buttons,Readouts,Chrome,ElevationProfile}.swift` |
+| 配色、数字字号、文字字号、尺寸、动效常量 | `native/Pedalfun/UI/Design.swift` |
+| 共用组件 | `native/Pedalfun/UI/Components/{Buttons,Controls,Readouts,WeekBars,Chrome,ElevationProfile}.swift` |
 | 页面 | `native/Pedalfun/UI/Screens/*View.swift` |
 | 单元测试 / 界面测试 | `native/PedalfunTests/` · `native/PedalfunUITests/` |
 
 - 每个页面建在 `ScreenScaffold` 里；主按钮高度由 `Metrics.actionBar` 统一。
+- 页面和组件里不自定字号、颜色、共用尺寸和动画：字号用 `TypeScale` / `TextScale`，尺寸用 `Metrics`，动画用 `Motion`。页面里只留相邻元素之间的间距。「小标签 + 数字」用 `Stat`，分隔线用 `Hairline`。
+- 页面显示什么由 `…Presentation` 决定并配单元测试，页面只负责摆放。
 - 跑测试：`cd native && xcodebuild -project Pedalfun.xcodeproj -scheme Pedalfun -destination 'platform=iOS Simulator,name=iPhone 17 Pro' test`
 - 启动参数（看界面用）：`-mock 1` · `-demo cruise|climb|descent|autopause|paused|gpsweak|summary|detail|history|settings` · `-theme light|dark` · `-autostart 1` · `-weight 70 -height 175 -sex male|female`（个人资料，只对这次启动生效）。
 - 改骑行阈值只改 `RideTracker.swift`。网页版暂停期间 `src/ride/tracker.ts` 不再同步，恢复开发时要先对齐。

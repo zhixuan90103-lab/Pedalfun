@@ -14,10 +14,10 @@ struct SummaryView: View {
     @State private var wiped = false
 
     var body: some View {
-        let f = settings.fmt
+        let p = SummaryPresentation(ride, live: live, profile: settings.profile, settings.fmt)
 
         ScreenScaffold {
-            TopBar(title: "\(Fmt.date(ride.date)) \(Fmt.clock(ride.date))") {
+            TopBar(title: p.topTitle) {
                 if !live {
                     IconButton(icon: "chevron.left", label: "返回") { model.go(fromHistory ? .history : .home) }
                 }
@@ -27,17 +27,17 @@ struct SummaryView: View {
         } content: {
             // One screen, no scrolling: the profile flexes, the rows share what is left.
             VStack(alignment: .leading, spacing: 0) {
-                Text(live ? "\(ride.name)，已保存" : ride.name)
-                    .font(.system(size: 15))
+                Text(p.name)
+                    .font(.text(TextScale.body))
                     .foregroundStyle(pal.ink2)
                 HStack(alignment: .lastTextBaseline, spacing: 8) {
-                    Num(f.dist(ride.dist), TypeScale.display)
-                    Text(f.distUnit).font(.system(size: 16)).foregroundStyle(pal.ink2)
+                    Num(p.distText, TypeScale.display)
+                    Text(p.distUnit).font(.text(TextScale.title)).foregroundStyle(pal.ink2)
                 }
                 .padding(.top, 8)
 
                 ElevationProfile(samples: ride.samples, maxSeg: 64)
-                    .frame(minHeight: 40, maxHeight: 96)
+                    .frame(minHeight: Metrics.profileHeight.lowerBound, maxHeight: Metrics.profileHeight.upperBound)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     // Wipes in from the left once.
                     .mask(alignment: .leading) {
@@ -53,31 +53,16 @@ struct SummaryView: View {
                     legend(pal.go, "下坡")
                     legend(pal.stop, "上坡")
                     Spacer(minLength: 0)
-                    Text("\(f.dist(ride.dist, digits: 1)) \(f.distUnit)")
+                    Text(p.endLabel)
                 }
-                .font(.system(size: 12))
+                .font(.text(TextScale.caption))
                 .foregroundStyle(pal.ink3)
                 .padding(.top, 6)
 
                 Spacer(minLength: 10)
-                group("时间") {
-                    stat("移动时间", nil, Fmt.dur(ride.moving))
-                    stat("总耗时", nil, Fmt.dur(ride.total))
-                }
-                rule
-                group("速度") {
-                    stat("均速", f.speedUnit, f.speed(ride.avg))
-                    stat("最高", f.speedUnit, f.speed(ride.max))
-                }
-                rule
-                group("海拔") {
-                    stat("爬升", f.altUnit, f.alt(ride.climb))
-                    stat("最高", f.altUnit, f.alt(ride.altMax))
-                }
-                rule
-                group("消耗") {
-                    stat("估算", "kcal", ride.kcal(settings.profile).map(Fmt.kcal) ?? "--")
-                    Color.clear.frame(maxWidth: .infinity, maxHeight: 1)
+                ForEach(Array(p.groups.enumerated()), id: \.element.id) { i, g in
+                    if i > 0 { Hairline() }
+                    group(g)
                 }
             }
             .padding(.horizontal, Metrics.side)
@@ -104,32 +89,24 @@ struct SummaryView: View {
     private func legend(_ color: Color, _ text: String) -> some View {
         HStack(spacing: 5) {
             Circle().fill(color).frame(width: 8, height: 8)
-            Text(text).font(.system(size: 12)).foregroundStyle(pal.ink2)
+            Text(text).font(.text(TextScale.caption)).foregroundStyle(pal.ink2)
         }
     }
 
-    private var rule: some View {
-        Rectangle().fill(pal.surface).frame(height: 1)
-    }
-
-    /// One category: its name in a narrow left column, then its numbers.
-    private func group<Cells: View>(_ title: String, @ViewBuilder cells: () -> Cells) -> some View {
+    /// One category: its name in a narrow left column, then its numbers in
+    /// two equal columns (a lone number keeps to the first).
+    private func group(_ g: SummaryPresentation.Group) -> some View {
         HStack(alignment: .center, spacing: Metrics.gridGap) {
-            Text(title)
-                .font(.system(size: 15, weight: .semibold))
+            Text(g.title)
+                .font(.text(TextScale.body, .semibold))
                 .foregroundStyle(pal.ink)
-                .frame(width: 52, alignment: .leading)
-            cells()
+                .frame(width: Metrics.categoryColumn, alignment: .leading)
+            ForEach(g.cells, id: \.label) { Stat($0, TypeScale.stat) }
+            if g.cells.count < 2 {
+                Color.clear.frame(maxWidth: .infinity, maxHeight: 1)
+            }
         }
-        .frame(maxHeight: 78)
+        .frame(maxHeight: Metrics.categoryRowMax)
         .accessibilityElement(children: .contain)
-    }
-
-    private func stat(_ label: String, _ unit: String?, _ value: String) -> some View {
-        VStack(alignment: .leading, spacing: 3) {
-            CellLabel(label, unit: unit)
-            Num(value, TypeScale.stat)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

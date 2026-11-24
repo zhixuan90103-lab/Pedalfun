@@ -82,6 +82,29 @@ enum Metrics {
     static let gridGap: CGFloat = 12
     /// padding of the grade capsule around its text
     static let capsulePad = CGSize(width: 16, height: 8)
+    /// a separating line between tiers or categories
+    static let hairline: CGFloat = 1
+    /// icons: a round button's is this share of its diameter
+    static let iconRatio: CGFloat = 0.36
+    static let iconCapsule: CGFloat = 26
+    static let iconBar: CGFloat = 20
+    /// week bars: gap between bars, tallest they grow, and half the height
+    /// the label inside a bar needs
+    static let barGap: CGFloat = 14
+    static let barMaxHeight: CGFloat = 150
+    static let barLabelHalf: CGFloat = 15
+    /// summary: the category name column, a category row, the profile
+    static let categoryColumn: CGFloat = 52
+    static let categoryRowMax: CGFloat = 78
+    static let profileHeight: ClosedRange<CGFloat> = 40...96
+    /// settings
+    static let settingRow: CGFloat = 68
+    static let fieldHeight: CGFloat = 42
+    static let fieldDigits: CGFloat = 58
+    /// the last-ride card
+    static let cardRadius: CGFloat = 22
+    /// how far play and stop travel when the pause button splits
+    static let splitOffset: CGFloat = 82
 }
 
 /// Numeral sizes. One size per role; screens never invent their own.
@@ -102,10 +125,28 @@ enum TypeScale {
     static let card: CGFloat = 24
     /// numbers set inline with small text
     static let inline: CGFloat = 19
-    /// the speed unit beside the hero number, the wordmark
+    /// the speed unit beside the hero number, typed numbers in settings
     static let unit: CGFloat = 22
-    /// small labels and units
+    /// the date under a week bar
+    static let date: CGFloat = 15
+    /// the distance inside a week bar
     static let label: CGFloat = 13
+}
+
+/// Sizes of running text (system font). One size per role, as with numerals.
+enum TextScale {
+    /// top bar title, a setting's name, the unit beside a display number
+    static let title: CGFloat = 16
+    /// ride name, month header, category name, empty-state copy
+    static let body: CGFloat = 15
+    /// week summary, ride status, toast, picker options
+    static let note: CGFloat = 14
+    /// data labels, units, setting hints
+    static let label: CGFloat = 13
+    /// weekdays, legend, profile scale
+    static let caption: CGFloat = 12
+    /// the unit inside a week bar
+    static let micro: CGFloat = 10
 }
 
 /// Every animation in the app. Screens reference these by role, so timing
@@ -141,12 +182,25 @@ enum Motion {
     static let toast = Animation.easeOut(duration: 0.18)
     /// a deleted history row closing up
     static let rowRemove = Animation.easeOut(duration: 0.25)
-    /// one-off reveals: week bars growing, elevation profile wiping in
+    /// a new top speed: held green, then faded back
+    static let maxFlash = Animation.easeOut(duration: 1.0).delay(0.6)
+    /// GPS bars changing level
+    static let signal = Animation.easeOut(duration: 0.25)
+    /// one-off reveals: week bars growing one after another, then their
+    /// labels fading in; elevation profile wiping in
     static let barGrow = Animation.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.5)
+    static let barStep = 0.045
+    static let barDelay = 0.08
+    static let barLabel = Animation.easeOut(duration: 0.25).delay(0.27)
     static let profileWipe = Animation.timingCurve(0.3, 0, 0.2, 1, duration: 0.7).delay(0.12)
 }
 
 extension Font {
+    /// Running text in the system face, at a `TextScale` size.
+    static func text(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
+        .system(size: size, weight: weight)
+    }
+
     /// Barlow Condensed: the numeral face.
     static func num(_ size: CGFloat, bold: Bool = true) -> Font {
         // Tabular digits: a changing number must not shift its neighbours.

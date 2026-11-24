@@ -51,6 +51,22 @@ struct Fmt {
     }
 }
 
+/// One labelled number as a screen shows it: "均速 km/h" over "23.2".
+struct StatCell: Equatable {
+    var label: String
+    var unit: String?
+    var value: String
+
+    /// Shown in place of a number that does not exist.
+    static let none = "--"
+
+    init(_ label: String, _ unit: String? = nil, _ value: String) {
+        self.label = label
+        self.unit = unit
+        self.value = value
+    }
+}
+
 enum GradeBand {
     case down, flat, up
 

@@ -20,6 +20,18 @@ struct Fix {
     var motion: Double?
 }
 
+/// How a fix reads against the thresholds in `RideTracker.Tune`.
+extension Fix {
+    /// Too inaccurate to trust the speed shown from it.
+    var isWeak: Bool { !(hAcc >= 0 && hAcc <= RideTracker.Tune.weakAcc) }
+    /// Accurate enough to add distance and to measure displacement from.
+    var isUsable: Bool { hAcc >= 0 && hAcc <= RideTracker.Tune.rejectAcc }
+    /// The accelerometer says the phone is at rest. False when there is no accelerometer.
+    var isStill: Bool { motion.map { $0 < RideTracker.Tune.stillMotion } ?? false }
+    /// The accelerometer says the phone is clearly being moved.
+    var isShaking: Bool { motion.map { $0 >= RideTracker.Tune.stillMotion * 2 } ?? false }
+}
+
 struct TrackPoint: Codable {
     var t: TimeInterval
     var lat: Double
@@ -71,8 +83,7 @@ struct RideState {
 /// start is confirmed after about a second and the buffered fixes are
 /// replayed. So the confirmation delay never leaks into the recorded numbers.
 ///
-/// The receiver's speed is not shown raw: it is cross-checked against recent
-/// displacement and against what a bicycle can physically do (see `estimate`).
+/// The receiver's speed is not used raw; it goes through `SpeedEstimator` first.
 ///
 /// The thresholds are starting points and need tuning on real rides.
 final class RideTracker {
@@ -145,10 +156,7 @@ final class RideTracker {
     private var lastSampleD = 0.0
     private var stopCand: Snapshot?
     private var goBuf: [Step] = []
-    /// recent usable positions, for displacement speed
-    private var recent: [(t: TimeInterval, lat: Double, lon: Double)] = []
-    /// previous speed estimate, m/s
-    private var vRef = 0.0
+    private var speed = SpeedEstimator()
 
     init(autoPause: @escaping () -> Bool, startedAt: Date = Date()) {
         self.autoPause = autoPause
@@ -182,7 +190,7 @@ final class RideTracker {
         let prev = last
         last = fix
 
-        let weak = !(fix.hAcc >= 0 && fix.hAcc <= Tune.weakAcc)
+        let weak = fix.isWeak
         state.gpsWeak = weak
 
         let alt = altitude(fix)
@@ -191,8 +199,7 @@ final class RideTracker {
             state.altMax = alt
             climbRef = alt
             state.samples.append(Sample(d: 0, a: alt))
-            remember(fix)
-            vRef = doppler(fix) ?? 0
+            speed.begin(fix)
             return
         }
         state.alt = alt
@@ -202,7 +209,7 @@ final class RideTracker {
         let dd = Self.haversine(prev.lat, prev.lon, fix.lat, fix.lon)
         if dd / dt > Tune.maxSpeed { return }
         // Estimated on every fix, paused or not, so it is current on resume.
-        let v = estimate(fix, dd: dd, dt: dt)
+        let v = speed.update(fix, dd: dd, dt: dt)
         if state.status == .paused { return }
         let step = Step(fix: fix, dd: dd, dt: dt, v: v, weak: weak)
 
@@ -214,7 +221,7 @@ final class RideTracker {
             return
         }
 
-        let still = fix.motion.map { $0 < Tune.stillMotion } ?? false
+        let still = fix.isStill
 
         if state.status == .moving {
             let stillStop = still && v < Tune.driftSpeed
@@ -249,54 +256,13 @@ final class RideTracker {
             return
         }
         goBuf.append(step)
-        let shaking = fix.motion.map { $0 >= Tune.stillMotion * 2 } ?? false
-        if (shaking && v > Tune.fastGoSpeed) || fix.t - goBuf[0].fix.t >= Tune.goConfirm {
+        if (fix.isShaking && v > Tune.fastGoSpeed) || fix.t - goBuf[0].fix.t >= Tune.goConfirm {
             state.status = .moving
             window = []
             newSegment()
             for st in goBuf { accumulate(st) }
             goBuf = []
         }
-    }
-
-    /// The receiver's Doppler speed, when it is usable.
-    private func doppler(_ fix: Fix) -> Double? {
-        guard let s = fix.speed, s >= 0 else { return nil }
-        if let acc = fix.speedAcc, !(acc >= 0 && acc <= Tune.speedAccLimit) { return nil }
-        return s
-    }
-
-    private func remember(_ fix: Fix) {
-        if fix.hAcc >= 0 && fix.hAcc <= Tune.rejectAcc {
-            recent.append((fix.t, fix.lat, fix.lon))
-        }
-        recent.removeAll { $0.t < fix.t - Tune.posWindow * 3 }
-    }
-
-    /// Speed in m/s for this fix.
-    ///
-    /// The receiver's speed is filtered by the system and, with poor signal,
-    /// keeps reporting riding speed for seconds after the bike has stopped.
-    /// Displacement over the last couple of seconds cannot lag like that, and
-    /// position noise only ever inflates it, so it is used to pull a too-high
-    /// reading down, never to push one up.
-    private func estimate(_ fix: Fix, dd: Double, dt: Double) -> Double {
-        remember(fix)
-        var displaced: Double?
-        if let old = recent.last(where: { $0.t <= fix.t - Tune.posWindow }) {
-            displaced = Self.haversine(old.lat, old.lon, fix.lat, fix.lon) / (fix.t - old.t)
-        }
-
-        var v: Double
-        if let d = doppler(fix) {
-            v = d
-            if let p = displaced, d > p * Tune.lagRatio + Tune.lagMargin { v = p }
-        } else {
-            v = displaced ?? dd / dt
-        }
-        v = Swift.min(v, vRef + Tune.maxAccel * dt)
-        vRef = v
-        return v
     }
 
     private func altitude(_ fix: Fix) -> Double {
@@ -313,7 +279,7 @@ final class RideTracker {
 
     private func accumulate(_ step: Step) {
         let fix = step.fix
-        let usable = fix.hAcc >= 0 && fix.hAcc <= Tune.rejectAcc
+        let usable = fix.isUsable
         let baro = fix.baro != nil
         let alt = state.alt
 

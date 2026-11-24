@@ -39,7 +39,7 @@ struct HistoryView: View {
         } content: {
             if store.rides.isEmpty {
                 Text("还没有骑行记录。回到首页，点开始按钮记下第一条。")
-                    .font(.system(size: 15))
+                    .font(.text(TextScale.body))
                     .foregroundStyle(pal.ink2)
                     .padding(.horizontal, Metrics.side)
                     .padding(.top, 40)
@@ -85,7 +85,7 @@ struct HistoryView: View {
     private func header(_ month: Month, _ f: Fmt) -> some View {
         HStack(alignment: .lastTextBaseline) {
             Text(month.id)
-                .font(.system(size: 15, weight: .semibold))
+                .font(.text(TextScale.body, .semibold))
                 .foregroundStyle(pal.ink)
             Spacer()
             HStack(alignment: .lastTextBaseline, spacing: 3) {
@@ -95,7 +95,7 @@ struct HistoryView: View {
                     .foregroundStyle(pal.ink)
                 Text(f.distUnit)
             }
-            .font(.system(size: 13))
+            .font(.text(TextScale.label))
             .foregroundStyle(pal.ink2)
         }
         .padding(.horizontal, Metrics.side)
@@ -133,6 +133,6 @@ struct HistoryView: View {
     }
 
     private func small(_ text: String) -> some View {
-        Text(text).font(.system(size: 13)).foregroundStyle(pal.ink2)
+        Text(text).font(.text(TextScale.label)).foregroundStyle(pal.ink2)
     }
 }

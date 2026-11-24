@@ -39,7 +39,7 @@ struct RideView: View {
             // New top speed: one short highlight, only once the ride is under way.
             guard new > old + 0.05, s.moving > 45 else { return }
             maxFlash = true
-            withAnimation(.easeOut(duration: 1.0).delay(0.6)) { maxFlash = false }
+            withAnimation(Motion.maxFlash) { maxFlash = false }
         }
     }
 
@@ -53,7 +53,7 @@ struct RideView: View {
             HStack(spacing: 8) {
                 GPSBars(level: gpsWeak ? .weak : .good, color: ink)
                 Text(p.statusText)
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(.text(TextScale.note, .semibold))
                     .foregroundStyle(p.weak ? Palette.warnOnField : ink)
                     .padding(.horizontal, p.weak ? 10 : 0)
                     .padding(.vertical, 3)
@@ -106,7 +106,7 @@ struct RideView: View {
                 }
                 .modifier(RiseIn(shown: appeared, delay: 0))
                 Spacer(minLength: 0)
-                rule
+                Hairline()
                 Spacer(minLength: 0)
                 HStack(spacing: gap) {
                     cell("均速", nil, p.avgText, TypeScale.secondary)
@@ -116,7 +116,7 @@ struct RideView: View {
                 }
                 .modifier(RiseIn(shown: appeared, delay: Motion.riseStep))
                 Spacer(minLength: 0)
-                rule
+                Hairline()
                 Spacer(minLength: 0)
                 HStack(spacing: gap) {
                     gradeCell(p)
@@ -132,16 +132,8 @@ struct RideView: View {
         .padding(.top, 4)
     }
 
-    private var rule: some View {
-        Rectangle().fill(pal.surface).frame(height: 1)
-    }
-
     private func cell(_ label: String, _ unit: String?, _ value: String, _ size: CGFloat, color: Color? = nil) -> some View {
-        VStack(alignment: .leading, spacing: 3) {
-            CellLabel(label, unit: unit)
-            Num(value, size, color: color)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        Stat(StatCell(label, unit, value), size, color: color)
     }
 
     /// The capsule hugs the text with equal padding on both sides. The text
@@ -171,7 +163,7 @@ struct RideView: View {
                 withAnimation(Motion.split) { model.session?.resume() }
             }
             .transition(.asymmetric(
-                insertion: .offset(x: 82).combined(with: .scale(scale: 0.8)).combined(with: .opacity),
+                insertion: .offset(x: Metrics.splitOffset).combined(with: .scale(scale: 0.8)).combined(with: .opacity),
                 removal: .identity
             ))
             HoldButton(icon: "stop.fill", label: "结束骑行，长按", fill: pal.stop, ring: pal.stop) {
@@ -180,7 +172,7 @@ struct RideView: View {
                 model.endRide()
             }
             .transition(.asymmetric(
-                insertion: .offset(x: -82).combined(with: .scale(scale: 0.8)).combined(with: .opacity),
+                insertion: .offset(x: -Metrics.splitOffset).combined(with: .scale(scale: 0.8)).combined(with: .opacity),
                 removal: .identity
             ))
         } else {

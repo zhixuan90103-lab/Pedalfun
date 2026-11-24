@@ -27,7 +27,7 @@ struct RoundButton: View {
                 .frame(width: size, height: size)
                 .overlay {
                     Image(systemName: icon)
-                        .font(.system(size: size * 0.36, weight: .bold))
+                        .font(.system(size: size * Metrics.iconRatio, weight: .bold))
                         .foregroundStyle(tint)
                 }
         }
@@ -51,7 +51,7 @@ struct CapsuleButton: View {
                 .frame(width: Metrics.capsule.width, height: Metrics.capsule.height)
                 .overlay {
                     Image(systemName: icon)
-                        .font(.system(size: 26, weight: .bold))
+                        .font(.system(size: Metrics.iconCapsule, weight: .bold))
                         .foregroundStyle(.white)
                 }
         }
@@ -70,7 +70,7 @@ struct IconButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: icon)
-                .font(.system(size: 20, weight: .semibold))
+                .font(.system(size: Metrics.iconBar, weight: .semibold))
                 .foregroundStyle(pal.ink)
                 .frame(width: 44, height: 44)
                 .contentShape(Circle())
@@ -111,7 +111,7 @@ struct HoldButton: View {
             .frame(width: size, height: size)
             .overlay {
                 Image(systemName: icon)
-                    .font(.system(size: size * 0.36, weight: .bold))
+                    .font(.system(size: size * Metrics.iconRatio, weight: .bold))
                     .foregroundStyle(tint)
             }
             .scaleEffect(holding ? 0.94 : 1)

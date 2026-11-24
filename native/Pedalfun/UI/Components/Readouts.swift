@@ -44,8 +44,39 @@ struct CellLabel: View {
     var body: some View {
         (Text(text).foregroundColor(color ?? pal.ink2)
             + Text(unit.map { " \($0)" } ?? "").foregroundColor(color ?? pal.ink3))
-            .font(.system(size: 13))
+            .font(.text(TextScale.label))
             .lineLimit(1)
+    }
+}
+
+/// A labelled number: small label (and unit) above, the number below,
+/// left-aligned and taking whatever width its column offers.
+struct Stat: View {
+    var cell: StatCell
+    var size: CGFloat
+    var color: Color?
+
+    init(_ cell: StatCell, _ size: CGFloat, color: Color? = nil) {
+        self.cell = cell
+        self.size = size
+        self.color = color
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 3) {
+            CellLabel(cell.label, unit: cell.unit)
+            Num(cell.value, size, color: color)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+/// The thin line between tiers or categories.
+struct Hairline: View {
+    @Environment(\.palette) private var pal
+
+    var body: some View {
+        Rectangle().fill(pal.surface).frame(height: Metrics.hairline)
     }
 }
 
@@ -65,7 +96,7 @@ struct GPSBars: View {
                     .frame(width: 4, height: 12)
             }
         }
-        .animation(.easeOut(duration: 0.25), value: level)
+        .animation(Motion.signal, value: level)
         .accessibilityHidden(true)
     }
 
@@ -86,7 +117,7 @@ struct GPSChip: View {
     var body: some View {
         HStack(spacing: 7) {
             Text(permission == .denied ? "定位未授权" : "GPS")
-                .font(.system(size: 13))
+                .font(.text(TextScale.label))
                 .foregroundStyle(permission == .denied ? pal.warn : pal.ink)
             GPSBars(level: permission == .granted ? .good : .off)
         }

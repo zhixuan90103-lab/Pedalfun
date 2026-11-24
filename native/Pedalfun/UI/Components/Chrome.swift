@@ -11,7 +11,7 @@ struct TopBar<Leading: View, Trailing: View>: View {
     var body: some View {
         ZStack {
             Text(title)
-                .font(.system(size: 16, weight: .medium))
+                .font(.text(TextScale.title, .medium))
                 .foregroundStyle(pal.ink)
             HStack(spacing: 4) {
                 leading
@@ -73,7 +73,7 @@ struct ToastView: View {
         VStack {
             Spacer()
             Text(text)
-                .font(.system(size: 14, weight: .medium))
+                .font(.text(TextScale.note, .medium))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(pal.bg)
                 .padding(.horizontal, 16)

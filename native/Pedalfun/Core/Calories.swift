@@ -11,6 +11,10 @@ struct Profile: Equatable {
     var height: Double?
     /// kilograms
     var weight: Double?
+
+    /// Anything outside these counts as not filled in.
+    static let heightRange = 100.0...230.0
+    static let weightRange = 30.0...200.0
 }
 
 /// Rough energy estimate from average speed, moving time and the rider's
